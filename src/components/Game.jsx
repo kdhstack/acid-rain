@@ -3,10 +3,11 @@
 import React, {useState, useEffect, useRef} from 'react';
 import WordItem from './WordItem';
 import InputArea from './InputArea';
+import { clear } from 'localforage';
 
 // 사용할 가상의 단어 데이터
 const WORD_LIST = [
-    {english: 'aspiring', korean: '주목받는', speed: 3.5},
+    {english: 'aspiring', korean: '열망하는', speed: 7.5},
     {english: 'roll-out', korean: '발표', speed: 1.2},
 ];
 
@@ -51,36 +52,42 @@ const Game = () => {
     useEffect(() => {
         if (gameOver) return;
 
-        const gameLoop = setInterval(() => {
+        const gameDropLoop = setInterval(() => {
             
             // 1. 단어 생성 로직 실행(일정 간격마다) - ex) 50ms마다 20% 확률로 새 단어 생성 시도
             if (Math.random() < 0.2) {
                 generateNewWord();
             }
 
-            let hitTheGround = false;
-
             setWords(prevWords =>
                 prevWords.map(word => {
                     // yPos를 속도만큼 증가시켜 땅에 떨어지게 한다.
-                    const newYPos = word.yPos + word.speed;
-
-                    if (newYPos >= GAME_HEIGHT - WORD_ITEM_HEIGHT) {
-                        hitTheGround = true;
-                    }
-                    
-                    return {...word, yPos: newYPos};
+                    return {...word, yPos: word.yPos + word.speed};
                  })
             );
-
-            if (hitTheGround) {
-                setGameOver(true);
-                clearInterval(gameLoop);
-            }
         }, 50); // 50ms마다 업데이트 = 초당 20프레임
 
-        return () => clearInterval(gameLoop);
-    }, [gameOver, words.length]); // words.length를 넣어 단어 생성 후 루프가 자연스럽게 재시작
+        return () => clearInterval(gameDropLoop);
+    }, [gameOver, words]); // words.length를 넣어 단어 생성 후 루프가 자연스럽게 재시작
+
+    useEffect(() => {
+        if (gameOver || words.length === 0) return;
+
+        let checkLoop;
+
+        checkLoop = setInterval(() => {
+            const wordHitTheGround = words.some(word =>
+                word.yPos >= GAME_HEIGHT - (WORD_ITEM_HEIGHT * 1.9)
+            );
+
+            if (wordHitTheGround) {
+                setGameOver(true);
+                clearInterval(checkLoop);
+            }
+        }, 50);
+
+        return () => clearInterval(checkLoop);
+    }, [gameOver, words]);
 
     const handleAnswerSubmit = (submittedAnswer) => {
         if (gameOver) return;
