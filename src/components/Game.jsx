@@ -7,7 +7,7 @@ import { clear } from 'localforage';
 
 // 사용할 가상의 단어 데이터
 const WORD_LIST = [
-    {english: 'aspiring', korean: '열망하는', speed: 7.5},
+    {english: 'aspiring', korean: '열망하는', speed: 1.5},
     {english: 'roll-out', korean: '발표', speed: 1.2},
 ];
 
