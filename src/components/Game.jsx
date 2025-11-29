@@ -3,7 +3,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import WordItem from './WordItem';
 import InputArea from './InputArea';
-import { clear } from 'localforage';
+import './Game.css';
 
 // 사용할 가상의 단어 데이터
 const WORD_LIST = [
@@ -118,24 +118,18 @@ const Game = () => {
     }
 
     return (
-        <div style = {{position : 'relative', width: '500px', margin: '20px auto'}}>
+        <div className = 'game-container'>
             <h2>Acid Rain - Score: {score}</h2>
             
             {/* 게임 영역 */}
-            <div style = {{
-                position: 'relative',
-                height: `${GAME_HEIGHT}px`,
-                border: '2px solid grey',
-                overflow: 'hidden',
-                backgroundColor: '#e6f0ff'
-            }}>
+            <div className='game-area'>
                 {words.map(word => (
                     <WordItem key = {word.id} word = {word} yPos = {word.yPos} />
                 ))}
 
                 {/* 게임 오버 메시지 추가 */}
                 {gameOver && (
-                    <div style = {{ /* ... 메시지 스타일 ... */}}>
+                    <div className='game-over-message'>
                         <h3>Game Over!</h3>
                         <p>Score: {score}</p>
                         <button onClick={() => window.location.reload()}>Play Again</button>
@@ -144,7 +138,7 @@ const Game = () => {
             </div>
             
             {/* 입력 영역 추가 */}
-            <div style = {{position: 'relative', width: '100%'}}>
+            <div className='user-input-area'>
                 <InputArea
                     score={score}
                     onAnswerSubmit={handleAnswerSubmit}
