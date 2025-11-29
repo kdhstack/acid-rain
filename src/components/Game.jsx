@@ -9,6 +9,22 @@ import { clear } from 'localforage';
 const WORD_LIST = [
     {english: 'aspiring', korean: '열망하는', speed: 1.5},
     {english: 'roll-out', korean: '발표', speed: 1.2},
+    {english: 'expertise', korean: '전문 지식', speed: 1.2},
+    {english: 'ample', korean: '충분한', speed: 1.3},
+    {english: 'offset', korean: '상쇄하다', speed: 1.2},
+    {english: 'overlook', korean: '간과하다', speed: 1.7},
+    {english: 'score', korean: '배경음악', speed: 1.8},
+    {english: 'remark', korean: '언급하다', speed: 1.4},
+    {english: 'virtually', korean: '사실상', speed: 1.2},
+    {english: 'sizable', korean: '꽤 큰', speed: 1.1},
+    {english: 'endeavor', korean: '노력', speed: 1.2},
+    {english: 'conduct', korean: '실시하다', speed: 1.3},
+    {english: 'authorize', korean: '승인하다', speed: 1.5},
+    {english: 'offset', korean: '상쇄하다', speed: 1.2},
+    {english: 'comprise', korean: '구성되다', speed: 1.6},
+    {english: 'last-minute', korean: '임박한', speed: 1.5},
+    {english: 'thoroughly', korean: '완전히', speed: 1.9},
+    {english: 'downtown', korean: '도심', speed: 1.2},
 ];
 
 const Game = () => {
@@ -77,7 +93,7 @@ const Game = () => {
 
         checkLoop = setInterval(() => {
             const wordHitTheGround = words.some(word =>
-                word.yPos >= GAME_HEIGHT - (WORD_ITEM_HEIGHT * 1.9)
+                word.yPos >= GAME_HEIGHT - (WORD_ITEM_HEIGHT * 1.6)
             );
 
             if (wordHitTheGround) {
